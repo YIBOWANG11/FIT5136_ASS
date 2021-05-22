@@ -2,6 +2,9 @@ package code.GUI;
 
 import code.GUI.entity.Chair;
 
+import code.entity.Conference;
+import code.entity.Paper;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
@@ -64,45 +67,24 @@ public class Notification extends JFrame {
         pnlContent.add(pnlForm);
         pnlForm.setLayout(null);
 
-        JLabel lblName = new JLabel("paper ID :");
-        lblName.setFont(new Font("Arial", Font.BOLD, 15));
-        lblName.setBounds(10, 30, 90, 27);
-        pnlForm.add(lblName);
+        String[][] columnData = getColumnData(chair);
+        String[] fieldsData = new String[]{"id","state"};
+        JTable conferenceTable = new JTable(columnData,fieldsData);
+        JScrollPane jScrollPane = new JScrollPane(conferenceTable);
+        jScrollPane.setBounds(20,80,200,100);
+        pnlForm.add(jScrollPane,BorderLayout.CENTER);
 
-        JTextField paperID = new JTextField();
-        paperID.setBounds(150, 30, 150, 27);
-        pnlForm.add(paperID);
-        paperID.setColumns(10);
-        
-        JButton btnSubmit = new JButton("State");
-        btnSubmit.setFont(new Font("Arial", Font.BOLD, 16));
-        btnSubmit.setBounds(150, 110, 88, 35);
-        pnlForm.add(btnSubmit);
+    }
 
-        btnSubmit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                try {
 
-                        String paperStr=paperID.getText().trim();
-//                      String stateStr=idList.getText().trim();
-//
-                    if(paperStr.isEmpty()) {
-                        JOptionPane.showMessageDialog(frame, " Please fill all fields , You Can't left any field blank ");
-                    }
-                    else
-                    {
-//                          String[] id_list = idStr.split(",");
-//                          List<Integer> id = Arrays.asList(id_list).stream().map(op->Integer.parseInt(op)).collect(Collectors.toList());
-////                        chair.assignPaper(Integer.parseInt(paperStr),id);
-////                        JOptionPane.showMessageDialog(frame, " Send paper successful");
-////                        setVisible(false);
-                    }
-                }
-                catch (Exception e19) {
-                    JOptionPane.showMessageDialog(frame, "Notification successfully");
-                    e19.printStackTrace();
-                }
-            }
-        });
+    public String[][] getColumnData(Chair chair){
+        List<Paper> conferences = chair.listDonePaper();
+        String[][] result = new String[conferences.size()][3];
+        for (int i = 0; i < conferences.size(); i++) {
+            result[i][0] = String.valueOf(conferences.get(i).getId());
+            result[i][1] = String.valueOf(conferences.get(i).getState());
+        }
+
+        return result;
     }
 }

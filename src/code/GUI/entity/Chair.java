@@ -7,6 +7,7 @@ import code.repo.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class Chair extends User {
 
@@ -66,7 +67,6 @@ public class Chair extends User {
 
     public void makeDecision(Integer paperId,String decision){
         Paper oldPaper = paperRepository.findById(paperId);
-        oldPaper.setState("done");
         oldPaper.setResult(decision);
         paperRepository.saveAll();;
     }
@@ -87,5 +87,12 @@ public class Chair extends User {
         return all;
     }
 
+    public List<Paper> listDonePaper(){
+        List<Paper> papers = paperRepository.findAll();
+        List<Paper> done = papers.stream().filter(op -> op.getState().equals("done"))
+            .collect(Collectors.toList());
+
+        return done;
+    }
 }
 
