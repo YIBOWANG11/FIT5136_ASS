@@ -1,2 +1,1 @@
-# FIT5136_ASS
- 
+# ConferenceManageSystem

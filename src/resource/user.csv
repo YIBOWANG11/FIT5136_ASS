@@ -1,0 +1,5 @@
+id,email,password,role
+1,admin@cms.edu,123,admin
+2,author@cms.edu,123,author
+3,chair@cms.edu,123,chair
+4,reviewer@cms.edu,123,reviewer
